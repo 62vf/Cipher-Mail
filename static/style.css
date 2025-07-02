@@ -1,0 +1,445 @@
+/* --- Global Styles & "Cyber" Theme Variables --- */
+:root {
+    --primary-bg: #0d1117; /* GitHub Dark-like background */
+    --secondary-bg: #161b22; /* Slightly lighter background for panels */
+    --tertiary-bg: #21262d; /* Hover and interactive elements */
+    --primary-text: #c9d1d9; /* Main text color */
+    --secondary-text: #8b949e; /* Dimmer text for secondary info */
+    --accent-color: #39d353; /* A vibrant, "hacker" green */
+    --accent-hover: #45e060;
+    --danger-color: #f85149;
+    --danger-hover: #ff6a62;
+    --border-color: #30363d;
+    --font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+    --border-radius: 4px;
+    --box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    --glow-shadow: 0 0 8px rgba(57, 211, 83, 0.4);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* --- General Layout --- */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    color: var(--accent-color);
+    text-shadow: var(--glow-shadow);
+}
+
+.user-info a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: normal;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.user-info a:hover {
+    color: var(--accent-hover);
+    text-shadow: 0 0 5px var(--accent-hover);
+}
+
+.app-container {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 20px;
+}
+
+.sidebar, .main-content {
+    background-color: var(--secondary-bg);
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+/* --- Buttons & Inputs --- */
+button, input[type="text"], input[type="password"] {
+    font-family: var(--font-family);
+    font-size: 1em;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease-in-out;
+    background-color: var(--tertiary-bg);
+    color: var(--primary-text);
+}
+
+input[type="text"], input[type="password"] {
+    width: calc(100% - 22px); /* 10px padding on each side + 1px border */
+    padding: 10px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: var(--glow-shadow);
+}
+
+button {
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+button:hover {
+    background-color: var(--accent-color);
+    color: var(--primary-bg);
+    box-shadow: var(--glow-shadow);
+}
+
+.delete-email-btn, .delete-message-btn {
+    background: transparent;
+    color: var(--secondary-text);
+    padding: 5px;
+    font-size: 1.1em;
+    border: none;
+}
+
+.delete-email-btn:hover, .delete-message-btn:hover {
+    color: var(--danger-color);
+    background-color: transparent;
+    box-shadow: none;
+}
+
+#new-email-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#new-email-form input {
+    flex-grow: 1;
+}
+
+/* --- Email & Inbox Lists --- */
+#email-list, #inbox-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+#email-list li, .inbox-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px 12px 12px;
+    border-bottom: 1px solid var(--border-color);
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-left-color 0.2s ease;
+}
+
+#email-list li:hover, .inbox-item:hover {
+    background-color: var(--tertiary-bg);
+    border-left-color: var(--accent-color);
+}
+
+#email-list li.active {
+    background-color: var(--accent-color);
+    color: var(--primary-bg);
+    font-weight: bold;
+}
+
+#email-list li.active .nickname, #email-list li.active .email-address {
+    color: var(--primary-bg);
+}
+
+#email-list li .nickname {
+    font-weight: bold;
+    color: var(--primary-text);
+    margin-left: 10px;
+}
+
+.inbox-item .from {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.inbox-item .subject {
+    color: var(--primary-text);
+}
+
+/* --- Modal View --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(13, 17, 23, 0.8);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--box-shadow);
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--secondary-text);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.close-btn:hover {
+    color: var(--primary-text);
+    transform: rotate(90deg);
+}
+
+#email-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+#email-subject {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 0;
+    color: var(--accent-color);
+}
+
+#email-from {
+    color: var(--secondary-text);
+}
+
+#email-body {
+    max-height: 60vh;
+    overflow-y: auto;
+    line-height: 1.7;
+    font-size: 0.95em;
+}
+
+#email-body a {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+#email-body a:hover {
+    text-shadow: var(--glow-shadow);
+}
+
+/* --- Loader Styles --- */
+#loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-bg);
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-content .subtitle {
+    color: var(--secondary-text);
+    font-size: 1.1em;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+/* Glitch Animation */
+.glitch {
+    position: relative;
+    font-size: 5em;
+    font-weight: 700;
+    color: var(--accent-color);
+    text-shadow: var(--glow-shadow);
+    animation: glitch-shake 2.5s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-bg);
+    overflow: hidden;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--danger-color);
+    animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--accent-hover), 2px 2px var(--danger-color);
+    animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+    0% { clip-path: inset(15% 0 86% 0); }
+    20% { clip-path: inset(55% 0 24% 0); }
+    40% { clip-path: inset(18% 0 33% 0); }
+    60% { clip-path: inset(82% 0 13% 0); }
+    80% { clip-path: inset(39% 0 55% 0); }
+    100% { clip-path: inset(64% 0 3% 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip-path: inset(82% 0 3% 0); }
+    20% { clip-path: inset(10% 0 84% 0); }
+    40% { clip-path: inset(92% 0 5% 0); }
+    60% { clip-path: inset(45% 0 46% 0); }
+    80% { clip-path: inset(7% 0 78% 0); }
+    100% { clip-path: inset(49% 0 47% 0); }
+}
+
+@keyframes glitch-shake {
+    0%, 100% { transform: skewX(0); }
+    48%, 52% { transform: skewX(0); }
+    49% { transform: skewX(5deg); }
+    50% { transform: skewX(-5deg); }
+    51% { transform: skewX(5deg); }
+}
+
+/* Scrollbar styling for a techy look */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-hover);
+}
+
+/* --- Authentication Pages --- */
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-card .form-group {
+    flex-direction: column;
+    gap: 8px;
+}
+
+.auth-card label {
+    font-weight: 500;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-switch a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* --- Flash Messages --- */
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: var(--success-color);
+}
+
+.alert-danger {
+    background-color: var(--error-color);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 900px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-group {
+        flex-direction: column;
+    }
+
+    .form-group button {
+        width: 100%;
+    }
+}
+

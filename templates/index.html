@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CipherMail - Temp Mail</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loader">
+        <div class="loader-content">
+            <h1 class="glitch" data-text="CipherMail">CipherMail</h1>
+            <p class="subtitle">Securing your temporary communications...</p>
+        </div>
+    </div>
+
+    <div class="container" style="display: none;">
+        <header>
+            <h1>📬 CipherMail</h1>
+            <p>Your temporary, secure, and private email solution</p>
+            {% if current_user.is_authenticated %}
+            <div style="text-align: right; margin-bottom: 1rem;">
+                <span>Welcome, <strong>{{ current_user.username }}</strong>!</span>
+                <a href="{{ url_for('logout') }}" style="margin-left: 15px; color: var(--primary-color); text-decoration: none; font-weight: 500;">Logout</a>
+            </div>
+            {% endif %}
+        </header>
+
+        <div class="main-content">
+            <div class="email-management card">
+                <h2>Create & Manage</h2>
+                <div class="form-group">
+                    <input type="text" id="nickname-input" placeholder="Nickname (optional)">
+                    <button id="new-email-btn">Create New Email</button>
+                </div>
+                <div id="email-list-container">
+                    <h3>Your Emails:</h3>
+                    <ul id="email-list">
+                        <!-- Email list will be populated by script.js -->
+                    </ul>
+                </div>
+                 <div id="current-email-display">
+                    <p>Currently using: <strong id="current-email-text">None</strong></p>
+                </div>
+            </div>
+
+            <div class="inbox-view card">
+                <h2>Inbox</h2>
+                <button id="refresh-inbox-btn">Refresh</button>
+                <div id="inbox-list">
+                    <!-- Inbox messages will be populated by script.js -->
+                </div>
+            </div>
+        </div>
+
+        <div id="email-content-view" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="email-subject"></h3>
+                    <button class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p id="email-from"></p>
+                    <hr>
+                    <div id="email-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
